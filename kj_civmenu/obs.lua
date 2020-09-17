@@ -21,16 +21,14 @@ function obs()
 	
 	obslist = {}
 		
-	if next(observations) == nil then
-		table.insert(obslist, 'None')
-	end
 	for _,v in pairs(observations) do
-		if v.Player == PlayerPedId() then
+		if v.ID == GetPlayerServerId(PlayerId()) then
+			print(v.Obs .. " - " .. v.ID .. " : " .. GetPlayerServerId(PlayerId()))
 			table.insert(obslist, v.Obs)
 		end
 	end
 	
-	if WarMenu.ComboBox('Active Obs (Enter)', obslist, obindex, obindex, function(current)  -- Active
+	if WarMenu.ComboBox('Active Obs (Enter - Delete)', obslist, obindex, obindex, function(current)  -- Active
 			obindex = current
 		end) then
 		if obslist[obindex] ~= 'None' then
@@ -75,7 +73,7 @@ function obs()
 		else
 			ShowNotification('Must be a number!')
 		end
-	elseif WarMenu.Button('Apply') then
+	elseif WarMenu.Button('Apply (Set Observation)') then
 		
 		if types[typeIndex] ~= 'Location' then
 			SetEntityAsMissionEntity(attachto, true, true)
@@ -88,7 +86,7 @@ function obs()
 			local observ = {}
 			observ.Type = types[typeIndex]
 			observ.Entity = entity
-			observ.Player = PlayerPedId()
+			observ.Player = GetPlayerPed(-1)
 			observ.ID = GetPlayerServerId(PlayerId())
 			observ.Range = range[1]
 			observ.Obs = KeyboardInput("Enter observations message", "", 255)
@@ -100,7 +98,7 @@ function obs()
 			
 			observ.Type = types[typeIndex]
 			observ.Coords = coords
-			observ.Player = PlayerPedId()
+			observ.Player = GetPlayerPed(-1)
 			observ.ID = GetPlayerServerId(PlayerId())
 			observ.Range = range[1]
 			observ.Obs = KeyboardInput("Enter observations message", "", 255)
@@ -172,7 +170,6 @@ Citizen.CreateThread(function()
 		Wait(0)
 		
 		for _,v in pairs(observations) do
-			
 			local plyCoords = GetEntityCoords(GetPlayerPed(-1))
 			local coords = nil
 			if v.Type ~= 'Location' then
@@ -199,3 +196,14 @@ Citizen.CreateThread(function()
 		
 	end
 end)
+
+function AdvancedNotification(icon1, icon2, type, sender, title, text) -- Function to display a notification with image.
+    Citizen.CreateThread(function()
+        Wait(1)
+        SetNotificationTextEntry("STRING")
+        AddTextComponentString(text)
+        SetNotificationMessage(icon1, icon2, true, type, sender, title, text)
+        DrawNotification(false, true)
+        Citizen.Wait(60000)
+    end)
+end
