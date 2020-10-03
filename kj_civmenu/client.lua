@@ -22,6 +22,10 @@ Citizen.CreateThread(function()
     -- SEARCHING
 	WarMenu.CreateSubMenu('search', 'civ', 'Searching')
     WarMenu.SetTitleBackgroundColor('search', 175, 17, 207, 255) -- Set header to purple
+    WarMenu.CreateSubMenu('searchitemsv', 'civ', 'Veh Items')
+	WarMenu.SetTitleBackgroundColor('searchitemsv', 175, 17, 207, 255) -- Set header to purple
+	WarMenu.CreateSubMenu('searchitemsp', 'civ', 'Pers. Items')
+	WarMenu.SetTitleBackgroundColor('searchitemsp', 175, 17, 207, 255) -- Set header to purple
     
 
     while true do
@@ -55,6 +59,12 @@ Citizen.CreateThread(function()
 			WarMenu.Display()
         elseif WarMenu.IsMenuOpened('obs') then
 			obs()
+			WarMenu.Display()
+		elseif WarMenu.IsMenuOpened('searchitemsv') then
+			itemsv()
+			WarMenu.Display()
+		elseif WarMenu.IsMenuOpened('searchitemsp') then
+			itemsp()
 			WarMenu.Display()
 		end
 

@@ -48,7 +48,9 @@ function searchciv()
 		local item = KeyboardInput("Person Item", "", 25)
         AddpItem(item)
 		
-	elseif WarMenu.MenuButton('Veh Items', 'searchitemsv') then
+	end
+	
+	if WarMenu.MenuButton('Veh Items', 'searchitemsv') then
 	elseif WarMenu.MenuButton('Pers. Items', 'searchitemsp') then
 	end
 
