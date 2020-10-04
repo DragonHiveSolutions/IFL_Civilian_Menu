@@ -23,7 +23,6 @@ function obs()
 		
 	for _,v in pairs(observations) do
 		if v.ID == GetPlayerServerId(PlayerId()) then
-			print(v.Obs .. " - " .. v.ID .. " : " .. GetPlayerServerId(PlayerId()))
 			table.insert(obslist, v.Obs)
 		end
 	end
